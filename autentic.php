@@ -1,0 +1,187 @@
+<?php
+// Verifica se o formulário de login foi enviado
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    // Verifique as credenciais do usuário no banco de dados ou sistema de autenticação
+    // Se as credenciais estiverem corretas, redirecione o usuário para a página interna
+    if (verificarCredenciais($username, $password)) {
+        // Iniciar sessão
+        session_start();
+        $_SESSION["username"] = $username;
+
+        // Redirecionar para a página interna
+        header("Location: pagina_interna.php");
+        exit();
+    } else {
+        // Caso contrário, exiba uma mensagem de erro
+        $erro = "Credenciais inválidas";
+    }
+}
+
+// Função para verificar as credenciais do usuário
+function verificarCredenciais($username, $password) {
+    // Aqui você deve implementar a lógica para verificar as credenciais do usuário
+    // Pode ser através de uma consulta ao banco de dados, verificação em API, etc.
+    // Retorne true se as credenciais forem válidas e false caso contrário
+    // Exemplo simples:
+    $validUsername = "usuario";
+    $validPassword = "senha";
+    return $username === $validUsername && $password === $validPassword;
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IW SEC</title>
+    <!-- Seus estilos CSS e outros recursos aqui --><link rel="stylesheet" href="CSS/STYLE1.CSS">
+</head>
+<body>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <input type="text" name="username" placeholder="Nome de usuário" required>
+        <input type="password" name="password" placeholder="Senha" required>
+        <button type="submit">Iniciar sessão</button>
+    </form>
+    <style>
+        /* Estilos CSS existentes */
+
+        /* Estilos adicionados para a imagem expandida */
+        .expanded-image-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .expanded-image {
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .expanded-image img {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Estilos adicionados para os submenus */
+        .submenu-content {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .submenu-content-inner {
+            background-color: #ffffffe7;
+            padding: 110px;
+            max-width: 80%;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        /* Transições suaves nos submenus */
+        .submenu {
+            transition: background-color 0.3s ease;
+        }
+
+        .submenu:hover {
+            background-color: #bbe1e6; /* Cor de fundo desejada ao passar o cursor por cima */
+        }
+    </style>
+</head>
+<body>
+    
+    <script src="display.js"></script>
+    <div class="container">
+        <div class="content">
+            <div class="title">IW SEC</div>
+            <div class="login-text"style="font-size: 25px;">Inicie a sessão em sua conta</div>
+            <div class="login-box"><input type="text"style="font-size: 20px;" placeholder="Login"></div>
+            <div class="login-box">
+                <input type="password" class="senha"style="font-size: 20px; "placeholder="Senha">
+                <span class="toggle-password" onclick="togglePasswordVisibility()">&#128065;</span>
+              </div>
+              
+            <button class="login-button"style="font-size: 20px;">Iniciar sessão</button>
+            <a class="help-text" style="font-size: 17px;" href="recuperar_senha.html">Esqueci minha senha</a>
+
+            <div class="submenus-container">
+                <div class="submenu" onclick="openSubMenu('quem-somos');increaseFontSize()">Quem Somos</div>
+                <div class="submenu" onclick="openSubMenu('gerenciamento-cameras')">Gerenciamento de Câmeras</div>
+                <div class="submenu" onclick="openSubMenu('acesso-gravacoes')">Acesso a Gravações</div>
+                <div class="submenu" onclick="openSubMenu('fale-conosco')">Fale Conosco</div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="expanded-image-container">
+        <div class="expanded-image">
+            <img id="expandedImage">
+        </div>
+    </div>
+    <!-- Adicionando os conteúdos dos submenus -->
+    <div id="quem-somos-content" class="submenu-content">
+        <div class="submenu-content-inner">
+            <!-- Coloque o texto ou conteúdo do submenu "Quem Somos" aqui -->
+Somos um programa de gerenciamento de câmeras inovador, 
+projetado para facilitar a visualização e manipulação de imagens em tempo real.
+ Com nossa plataforma, você poderá controlar e monitorar várias câmeras simultaneamente, 
+ garantindo uma experiência eficiente e conveniente. Além disso, 
+ nosso programa oferece recursos avançados para salvar e armazenar as imagens capturadas,
+  permitindo que você acesse e analise os registros quando necessário. 
+                          
+        </div>
+    </div>
+    <div id="gerenciamento-cameras-content" class="submenu-content">
+        <div class="submenu-content-inner">
+            <!-- Coloque o texto ou conteúdo do submenu "Gerenciamento de Câmeras" aqui -->
+O gerenciamento de câmeras refere-se ao controle e supervisão eficazes de câmeras de segurança ou de vigilância instaladas em um determinado local. Esse processo envolve a administração de várias funções, como monitoramento em tempo real, ajustes de configurações, acesso remoto e armazenamento de imagens. Um programa de gerenciamento de câmeras, como o nosso, simplifica essas tarefas, proporcionando uma interface intuitiva e recursos avançados para garantir uma visualização fácil, manipulação eficiente e armazenamento seguro das imagens capturadas pelas câmeras. 
+        </div>
+    </div>
+    <div id="acesso-gravacoes-content" class="submenu-content">
+        <div class="submenu-content-inner">
+            <!-- Coloque o texto ou conteúdo do submenu "Acesso a Gravações" aqui -->
+As gravações das imagens filmadas pelas câmeras são feitas por meio de um dispositivo chamado NVR (Network Video Recorder), que é um equipamento dedicado ao armazenamento e gerenciamento das imagens capturadas. O NVR recebe o fluxo de vídeo das câmeras por meio de uma rede de dados e realiza a gravação em tempo real. Esse dispositivo oferece recursos avançados, como compressão de vídeo, para otimizar o uso do armazenamento e manter a qualidade das imagens. Além disso, o NVR permite configurar agendas de gravação, detecção de movimento e outras configurações personalizadas para atender às necessidades de segurança específicas. 
+        </div>
+    </div>
+    <div id="fale-conosco-content" class="submenu-content">
+        <div class="submenu-content-inner">
+          <p style="font-size: 30px;">
+            &#x1F4DE; Telefone: +55 79 991188624<br />
+            &#x2709; Email: iwsec@gmail.com
+          </p>
+        </div>
+      </div>
+      
+    </div>
+
+    <script>
+        function increaseFontSize() {
+            var submenuContents = document.getElementsByClassName('submenu-content-inner');
+            for (var i = 0; i < submenuContents.length; i++) {
+                submenuContents[i].style.fontSize = '30px'; // Altere o valor '20px' para o tamanho de fonte desejado
+            }
+        }
+    </script>
+    
+</body>
+</html>
+
+
+    <?php if (isset($erro)) { ?>
+        <p><?php echo $erro; ?></p>
+    <?php } ?>
+</body>
+</html>
